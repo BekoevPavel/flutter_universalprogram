@@ -6,20 +6,21 @@ import 'package:flutter_universalprogram/features/main/presentation/widgets/adde
 import 'package:flutter_universalprogram/features/main/presentation/widgets/time_line_widget.dart';
 
 class LineContainer extends StatelessWidget {
-  const LineContainer({Key? key}) : super(key: key);
+  double scale = 1;
+  LineContainer({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    //userBloc.add(CloseSettingElementEvent(context, true));
+  Widget build(BuildContext context1) {
     return Center(
       child: Container(
         color: Colors.grey[200],
         margin: const EdgeInsets.all(12),
         child: BlocBuilder<MainBloc, MainState>(
           builder: (context, state) {
-            if (state is CloseSettingElementState)
-              return listLines(context, state as CloseSettingElementState);
-            return Text('');
+            print('scalr1 ${state}');
+            final MainBloc userBloc = BlocProvider.of<MainBloc>(context);
+            userBloc.add(UpdateEvent());
+            return listLines(context, state);
           },
         ),
       ),
@@ -27,11 +28,12 @@ class LineContainer extends StatelessWidget {
   }
 }
 
-Widget listLines(BuildContext context, CloseSettingElementState state) {
+Widget listLines(BuildContext context, MainState state) {
   var allData = AllData.getInstance();
+
   return ListView.builder(
-    itemCount: state.countEntities,
-    itemBuilder: (BuildContext context, index) {
+    itemCount: AllData.getInstance().elementEntities.length,
+    itemBuilder: (context, index) {
       return Column(
         children: [
           Row(
@@ -42,7 +44,7 @@ Widget listLines(BuildContext context, CloseSettingElementState state) {
               const SizedBox(
                 width: 10,
               ),
-              const TimeLineWidget(),
+              TimeLineWidget(),
             ],
           ),
           const SizedBox(

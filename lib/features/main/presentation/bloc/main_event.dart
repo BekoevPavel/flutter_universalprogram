@@ -1,11 +1,14 @@
 part of 'main_bloc.dart';
 
 abstract class MainEvent extends Equatable {
+  //const MainEvent();
   const MainEvent();
 
   @override
   List<Object> get props => [];
 }
+
+class MainInitialEvent extends MainEvent {}
 
 class OpenSettingElementEvent extends MainEvent {
   BuildContext context;
@@ -24,3 +27,10 @@ class CloseSettingElementEvent extends MainEvent {
     }
   }
 }
+
+class SetScaleEvent extends MainEvent {
+  double scale = 1;
+  SetScaleEvent(this.scale);
+}
+
+class UpdateEvent extends MainEvent {}

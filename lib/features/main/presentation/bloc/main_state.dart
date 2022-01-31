@@ -7,7 +7,19 @@ abstract class MainState extends Equatable {
   List<Object> get props => [];
 }
 
-class MainInitial extends MainState {}
+class MainInitial extends MainState {
+  const MainInitial();
+}
+
+class MainInitialState extends MainState {
+  MainInitialState() {
+//AllData.getInstance().
+    var allData = AllData.getInstance();
+
+    ElementEntity startElem = ElementEntity(nameElement: 'None', lastId: 0);
+    allData.elementEntities.add(startElem);
+  }
+}
 
 class OpenSettingElementState extends MainState {
   BuildContext context;
@@ -18,7 +30,7 @@ class OpenSettingElementState extends MainState {
 }
 
 class CloseSettingElementState extends MainState {
-  int countEntities = 0;
+  int countEntities = 1;
   ElementEntity? elementEntity;
   BuildContext context;
   bool state = false;
@@ -28,15 +40,17 @@ class CloseSettingElementState extends MainState {
     if (elemEntity != null) {
       Navigator.of(context).pop();
       elementEntity = elemEntity;
-    } else {
-      ElementEntity elem = ElementEntity(nameElement: 'None', lastId: 0);
-      elementEntity = elem;
+      if (state) AllData.getInstance().elementEntities.add(elementEntity!);
     }
-    var allData = AllData.getInstance();
-
-    if (state) {
-      allData.elementEntities.add(elementEntity!);
-    } else {}
-    countEntities = allData.elementEntities.length;
   }
 }
+
+class SetScaleState extends MainState {
+  double scale = 1;
+  SetScaleState(this.scale) {
+    AllData.getInstance().scaleTimeLine = scale;
+    print('scale ${AllData.getInstance().scaleTimeLine}');
+  }
+}
+
+class UpdateState extends MainState {}

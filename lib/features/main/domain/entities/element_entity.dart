@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
 
 class ElementEntity {

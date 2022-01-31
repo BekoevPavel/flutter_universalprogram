@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class LineEntity {
   List<Cut> cuts = [];
   late int id;
