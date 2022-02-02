@@ -8,10 +8,11 @@ class ElementEntity {
   List<String>? functionsForPins;
   ElementEntity({
     required this.nameElement,
-    required int? lastId,
+    required this.id,
     String? func,
     List<String>? funcForPins,
   }) {
+    lineEntity = LineEntity();
     //
     if (func != null) {
       function = func;
@@ -19,7 +20,6 @@ class ElementEntity {
     if (funcForPins != null) {
       functionsForPins = funcForPins;
     }
-    id = lastId! + 1;
     //
   }
 }

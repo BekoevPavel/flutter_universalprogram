@@ -34,3 +34,7 @@ class SetScaleEvent extends MainEvent {
 }
 
 class UpdateEvent extends MainEvent {}
+
+class UpdateOaintBoardEvent extends MainEvent {}
+
+class ScrollEvent extends MainEvent {}

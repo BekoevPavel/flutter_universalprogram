@@ -1,10 +1,9 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
+import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
 
 part 'main_event.dart';
 part 'main_state.dart';
@@ -28,6 +27,14 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       emit(
         UpdateState(),
       );
+    });
+
+    on<ScrollEvent>((event, emit) {
+      emit(ScrollState());
+    });
+
+    on<UpdateOaintBoardEvent>((event, emit) {
+      emit(UpdatePaintBoardState());
     });
   }
 }

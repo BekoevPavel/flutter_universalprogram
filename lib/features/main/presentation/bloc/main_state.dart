@@ -16,8 +16,8 @@ class MainInitialState extends MainState {
 //AllData.getInstance().
     var allData = AllData.getInstance();
 
-    ElementEntity startElem = ElementEntity(nameElement: 'None', lastId: 0);
-    allData.elementEntities.add(startElem);
+    ElementEntity startElem = ElementEntity(nameElement: 'None', id: 0);
+    allData.addEntity(startElem);
   }
 }
 
@@ -40,7 +40,7 @@ class CloseSettingElementState extends MainState {
     if (elemEntity != null) {
       Navigator.of(context).pop();
       elementEntity = elemEntity;
-      if (state) AllData.getInstance().elementEntities.add(elementEntity!);
+      if (state) AllData.getInstance().addEntity(elementEntity!);
     }
   }
 }
@@ -49,8 +49,11 @@ class SetScaleState extends MainState {
   double scale = 1;
   SetScaleState(this.scale) {
     AllData.getInstance().scaleTimeLine = scale;
-    print('scale ${AllData.getInstance().scaleTimeLine}');
   }
 }
 
 class UpdateState extends MainState {}
+
+class UpdatePaintBoardState extends MainState {}
+
+class ScrollState extends MainState {}

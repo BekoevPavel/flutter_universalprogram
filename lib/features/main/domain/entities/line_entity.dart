@@ -1,43 +1,33 @@
 class LineEntity {
-  List<Cut> cuts = [];
-  late int id;
+  List<Cut> _cuts = [];
   late double scale = 1;
-  LineEntity({required int lastId}) {
-    id = lastId + 1;
-  }
 
-  void addCut(double left, double right) {
-    Cut cut = Cut(lastId: cuts.length);
-    cut.setPoints(left, right);
-    cuts.add(cut);
+  void addCut(double pos) {
+    Cut cut = Cut(id: _cuts.length, pointsMap_: {'Left': 0, 'Right': pos});
+    _cuts.add(cut);
   }
 
   void addCuts(List<Cut> cuts) {
-    this.cuts = cuts;
+    this._cuts = cuts;
+  }
+
+  List<Cut> get cuts {
+    return _cuts;
   }
 }
 
 class Cut {
-  late int _id;
+  int id;
 
-  final Map<String, double> _pointsMap = {
-    'Left': 0,
-    'Right': 0,
-  };
-  Cut({required int lastId}) {
-    _id = lastId + 1;
-  }
+  Map<String, double>? pointsMap_;
+  Cut({required this.id, this.pointsMap_});
 
   void setPoints(double left, double right) {
-    _pointsMap['Left'] = left;
-    _pointsMap['Right'] = right;
+    pointsMap['Left'] = left;
+    pointsMap['Right'] = right;
   }
 
   Map<String, double> get pointsMap {
-    return _pointsMap;
-  }
-
-  int get id {
-    return _id;
+    return pointsMap_ ?? {'left': 0, 'right': 1};
   }
 }

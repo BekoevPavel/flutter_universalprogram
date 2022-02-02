@@ -17,8 +17,7 @@ class LineContainer extends StatelessWidget {
         margin: const EdgeInsets.all(12),
         child: BlocBuilder<MainBloc, MainState>(
           builder: (context, state) {
-            print('scalr1 ${state}');
-            final MainBloc userBloc = BlocProvider.of<MainBloc>(context);
+            MainBloc userBloc = BlocProvider.of<MainBloc>(context);
             userBloc.add(UpdateEvent());
             return listLines(context, state);
           },
@@ -48,7 +47,7 @@ Widget listLines(BuildContext context, MainState state) {
             ],
           ),
           const SizedBox(
-            height: 10,
+            height: 5,
           ),
         ],
       );

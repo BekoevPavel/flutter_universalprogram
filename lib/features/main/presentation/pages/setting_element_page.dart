@@ -33,19 +33,19 @@ class SettingElementPage extends StatelessWidget {
                 TextFormField(
                   controller: _nameController,
                   decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black),
+                    ),
                     labelText: 'Название элемента *',
                     hintText: 'Введите название элемента',
                   ),
                 ),
                 const SizedBox(
-                  height: 15,
+                  height: 10,
                 ),
-                TextFormField(
-                  controller: _functionController,
-                  decoration: const InputDecoration(
-                    labelText: 'Функция F(t) *',
-                    hintText: 'Введите функцию F(t)',
-                  ),
+                const Text(
+                  'y = F(t)',
+                  style: TextStyle(fontSize: 16),
                 ),
                 const SizedBox(
                   height: 30,
@@ -57,9 +57,9 @@ class SettingElementPage extends StatelessWidget {
                 IconButton(
                   iconSize: 50,
                   onPressed: () {
-                    var id = getMaxId();
+                    var id = AllData.getInstance().elementEntities.length;
                     ElementEntity elementEntity = ElementEntity(
-                        nameElement: _nameController.text, lastId: getMaxId());
+                        nameElement: _nameController.text, id: id);
                     MainBloc userBloc = BlocProvider.of<MainBloc>(context);
                     userBloc.add(CloseSettingElementEvent(
                         context, addedWidget!, elementEntity));
@@ -78,18 +78,18 @@ class SettingElementPage extends StatelessWidget {
   }
 }
 
-int getMaxId() {
-  var allData = AllData.getInstance();
-  int maxId = 0;
+// int getMaxId() {
+//   var allData = AllData.getInstance();
+//   int maxId = 0;
 
-  for (final i in allData.elementEntities) {
-    if (i.id > maxId) {
-      maxId = i.id;
-    }
-  }
+//   for (final i in allData.elementEntities) {
+//     if (i.id > maxId) {
+//       maxId = i.id;
+//     }
+//   }
 
-  return maxId;
-}
+//   return maxId;
+// }
 
 Widget _pinsController() {
   return Container(
