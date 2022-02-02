@@ -43,7 +43,9 @@ Widget listLines(BuildContext context, MainState state) {
               const SizedBox(
                 width: 10,
               ),
-              TimeLineWidget(),
+              TimeLineWidget(
+                elementEntity: allData.elementEntities[index],
+              ),
             ],
           ),
           const SizedBox(

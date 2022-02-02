@@ -15,9 +15,10 @@ class LineContainerSourse {
   ScaleParams getScalePoint(double width) {
     var scale = AllData.getInstance().scaleTimeLine;
     var start = AllData.getInstance().scrollK;
-    var scaleParams = ScaleParams(
-        countLines: 30 ~/ scale, delta: (width / 15) * scale, start: start);
-
+    var scaleParams =
+        ScaleParams(countLines: 100, delta: width / 20 * scale, start: start);
+//120 ~/ scale countLines
+//(width / 15) delta
     return scaleParams;
   }
 }

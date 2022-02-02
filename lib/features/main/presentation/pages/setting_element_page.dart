@@ -34,7 +34,7 @@ class SettingElementPage extends StatelessWidget {
                   controller: _nameController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.black),
+                      borderSide: BorderSide(color: Colors.green),
                     ),
                     labelText: 'Название элемента *',
                     hintText: 'Введите название элемента',
@@ -57,7 +57,9 @@ class SettingElementPage extends StatelessWidget {
                 IconButton(
                   iconSize: 50,
                   onPressed: () {
-                    var id = AllData.getInstance().elementEntities.length;
+                    var id = AllData.getInstance()
+                        .elementEntities
+                        .length; // изменить когда сделаю удаление, что корректно считался номер id
                     ElementEntity elementEntity = ElementEntity(
                         nameElement: _nameController.text, id: id);
                     MainBloc userBloc = BlocProvider.of<MainBloc>(context);
@@ -77,19 +79,6 @@ class SettingElementPage extends StatelessWidget {
     );
   }
 }
-
-// int getMaxId() {
-//   var allData = AllData.getInstance();
-//   int maxId = 0;
-
-//   for (final i in allData.elementEntities) {
-//     if (i.id > maxId) {
-//       maxId = i.id;
-//     }
-//   }
-
-//   return maxId;
-// }
 
 Widget _pinsController() {
   return Container(
