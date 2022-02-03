@@ -35,6 +35,12 @@ class SetScaleEvent extends MainEvent {
 
 class UpdateEvent extends MainEvent {}
 
-class UpdateOaintBoardEvent extends MainEvent {}
+class AddCutOnBoardEvent extends MainEvent {
+  ElementEntity elementEntity;
+  double width;
+  double dx;
+  AddCutOnBoardEvent(
+      {required this.dx, required this.elementEntity, required this.width});
+}
 
 class ScrollEvent extends MainEvent {}

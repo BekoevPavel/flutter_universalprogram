@@ -1,13 +1,12 @@
-import 'dart:async';
-import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
+import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
 
 import 'package:flutter_universalprogram/features/main/domain/sourse/line_container_sourse.dart';
 import 'package:flutter_universalprogram/features/main/presentation/bloc/main_bloc.dart';
+import 'package:flutter_universalprogram/features/main/presentation/widgets/function_widget.dart';
 
 class TimeLineWidget extends StatelessWidget {
   ElementEntity elementEntity;
@@ -15,44 +14,46 @@ class TimeLineWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Container(
-        height: 100,
-        decoration: BoxDecoration(
-          color: Colors.grey[200],
-          border: Border.all(
-            color: Colors.black,
+    return Flexible(child: LayoutBuilder(
+      builder: (BuildContext context, constraints) {
+        elementEntity.lineEntity.updateCuts(constraints.maxWidth);
+        return Container(
+          height: 100,
+          decoration: BoxDecoration(
+            color: Colors.grey[200],
+            border: Border.all(
+              color: Colors.black,
+            ),
           ),
-        ),
-        child: GestureDetector(
-          onLongPress: () {},
-          onTapDown: (data) {
-            MainBloc mainBloc = BlocProvider.of<MainBloc>(context);
-            var allData = AllData.getInstance();
-            var index = allData.elementEntities.length;
+          child: GestureDetector(
+            onLongPress: () {},
+            onTapDown: (data) {
+              MainBloc mainBloc = BlocProvider.of<MainBloc>(context);
+              var width = constraints.maxWidth;
 
-            LineContainerSourse lineContainerSourse = LineContainerSourse();
-            ScaleParams params = lineContainerSourse
-                .getScalePoint(MediaQuery.of(context).size.width);
-            var scale = AllData.getInstance().scaleTimeLine;
-            var x = (data.localPosition.dx + params.start) / scale;
-            elementEntity.lineEntity!.addCut(x);
-            //print(MediaQuery.of(context).size.width.toString());
-            //print(context.size!.width);
-
-            mainBloc.add(UpdateOaintBoardEvent());
-          },
-          child: CustomPaint(
+              mainBloc.add(
+                AddCutOnBoardEvent(
+                  width: width,
+                  elementEntity: elementEntity,
+                  dx: data.localPosition.dx,
+                ),
+              );
+            },
+            child: CustomPaint(
               painter: CurvePainter(
-                context: context,
                 elementEntity: elementEntity,
                 height: 100,
-                width: MediaQuery.of(context).size.width,
+                width: constraints.maxWidth,
               ),
-              child: stackBuilder(context)),
-        ),
-      ),
-    );
+              child: stackBuilder(
+                constraints.maxWidth,
+                elementEntity,
+              ),
+            ),
+          ),
+        );
+      },
+    ));
   }
 }
 
@@ -61,16 +62,13 @@ class CurvePainter extends CustomPainter {
   double width;
   int height;
   ElementEntity elementEntity;
-  BuildContext context;
+  //BuildContext context;
 
   //double scale;
   LineContainerSourse lineContainerSourse = LineContainerSourse();
 
   CurvePainter(
-      {required this.context,
-      required this.height,
-      required this.width,
-      required this.elementEntity});
+      {required this.height, required this.width, required this.elementEntity});
 
   void update(double widht, int height) {
     this.width = widht;
@@ -81,13 +79,13 @@ class CurvePainter extends CustomPainter {
     //print('count entities ${enitities.length}');
     ScaleParams scaleParams = lineContainerSourse.getScalePoint(size.width);
 
-    for (var cut in elementEntity.lineEntity!.cuts) {
+    for (var cut in elementEntity.lineEntity.cuts) {
       Paint paint = Paint();
       paint.color = Colors.black;
-      double x1 = cut.pointsMap['Right']!;
+      double x1 = cut.pointsMap[PositionCut.left]!;
       double y1 = 0;
 
-      double x2 = cut.pointsMap['Right']!;
+      double x2 = cut.pointsMap[PositionCut.left]!;
       double y2 = 100;
 
       var start = Offset(
@@ -138,18 +136,12 @@ class CurvePainter extends CustomPainter {
   }
 }
 
-Widget stackBuilder(BuildContext context) {
+Widget stackBuilder(double width, ElementEntity elementEntity) {
   List<Widget> widgets = [];
 
-  var start = LineContainerSourse()
-      .getScalePoint(MediaQuery.of(context).size.width)
-      .start;
-  var delta = LineContainerSourse()
-      .getScalePoint(MediaQuery.of(context).size.width)
-      .delta;
-  var countLines = LineContainerSourse()
-      .getScalePoint(MediaQuery.of(context).size.width)
-      .countLines;
+  var start = LineContainerSourse().getScalePoint(width).start;
+  var delta = LineContainerSourse().getScalePoint(width).delta;
+  var countLines = LineContainerSourse().getScalePoint(width).countLines;
 
   for (int i = 0; i < countLines; i++) {
     var textWidget = Positioned(
@@ -157,41 +149,17 @@ Widget stackBuilder(BuildContext context) {
       bottom: 10,
       child: Text('${i * 5}'),
     );
-    //double? width = context.size?.width ?? 600;
-    //if (context.size != null) print('context: ' + context.size.toString());
-    //print('width ' + MediaQuery.of(context).size.width.toString());
-    //print('x: ${i * delta - start} width ${MediaQuery.of(context).size.width}');
-
-    if (i * delta - start > 0 &&
-        i * delta - start < MediaQuery.of(context).size.width - 210)
+    if (i * delta - start > 0 && i * delta - start < width)
       widgets.add(textWidget);
   }
-  var maxLenght = countLines * delta;
-  var functionWidget = Positioned(
-    left: -start,
-    child: Opacity(
-      opacity: 0.8,
-      child: Container(
-        padding: const EdgeInsets.all(8),
-        width: maxLenght,
-        height: 100,
-        color: Colors.black38,
-        child: Center(
-          child: TextFormField(
-            decoration: InputDecoration(
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-                borderSide: const BorderSide(color: Colors.green, width: 2),
-              ),
-              labelText: 'Функция *',
-              hintText: 'Введите функцию',
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
-  //widgets.add(functionWidget);
+
+  for (var cut in elementEntity.lineEntity.cuts) {
+    var functionWidget = FunctionWidget(
+      cut: cut,
+      delta: start,
+    );
+    widgets.add(functionWidget);
+  }
 
   return Stack(
     children: widgets,

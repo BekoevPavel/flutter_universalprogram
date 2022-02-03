@@ -57,3 +57,18 @@ class UpdateState extends MainState {}
 class UpdatePaintBoardState extends MainState {}
 
 class ScrollState extends MainState {}
+
+class AddCutOnBoardState extends MainState {
+  ElementEntity elementEntity;
+  double width;
+  double dx;
+  AddCutOnBoardState(
+      {required this.dx, required this.elementEntity, required this.width}) {
+    LineContainerSourse lineContainerSourse = LineContainerSourse();
+    ScaleParams params = lineContainerSourse.getScalePoint(width);
+    var scale = AllData.getInstance().scaleTimeLine;
+    var x = (dx + params.start) / scale;
+
+    elementEntity.lineEntity.addCut(x);
+  }
+}

@@ -1,7 +1,7 @@
 import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
 
 class ElementEntity {
-  LineEntity? lineEntity;
+  late LineEntity lineEntity;
   int id = 0;
   String? nameElement;
   String? function;

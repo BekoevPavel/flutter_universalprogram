@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
+import 'package:flutter_universalprogram/features/main/domain/sourse/line_container_sourse.dart';
 
 part 'main_event.dart';
 part 'main_state.dart';
@@ -33,8 +34,11 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       emit(ScrollState());
     });
 
-    on<UpdateOaintBoardEvent>((event, emit) {
-      emit(UpdatePaintBoardState());
+    on<AddCutOnBoardEvent>((event, emit) {
+      emit(AddCutOnBoardState(
+          elementEntity: event.elementEntity,
+          width: event.width,
+          dx: event.dx));
     });
   }
 }
