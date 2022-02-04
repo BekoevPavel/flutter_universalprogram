@@ -40,5 +40,9 @@ class MainBloc extends Bloc<MainEvent, MainState> {
           width: event.width,
           dx: event.dx));
     });
+
+    on<ChangeTypeEnterEvent>((event, emit) {
+      emit(ChangeTypeEnterState(newValue: event.newValue));
+    });
   }
 }

@@ -72,3 +72,10 @@ class AddCutOnBoardState extends MainState {
     elementEntity.lineEntity.addCut(x);
   }
 }
+
+class ChangeTypeEnterState extends MainState {
+  String newValue;
+  ChangeTypeEnterState({required this.newValue}) {
+    print('az');
+  }
+}

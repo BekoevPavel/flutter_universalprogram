@@ -1,6 +1,10 @@
 import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
 
+enum TypeEnter { input, output }
+
 class ElementEntity {
+  TypeEnter? typeEnter;
+
   late LineEntity lineEntity;
   int id = 0;
   String? nameElement;
@@ -11,6 +15,7 @@ class ElementEntity {
     required this.id,
     String? func,
     List<String>? funcForPins,
+    this.typeEnter,
   }) {
     lineEntity = LineEntity();
     //

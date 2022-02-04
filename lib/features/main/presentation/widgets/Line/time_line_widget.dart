@@ -6,10 +6,11 @@ import 'package:flutter_universalprogram/features/main/domain/entities/line_enti
 
 import 'package:flutter_universalprogram/features/main/domain/sourse/line_container_sourse.dart';
 import 'package:flutter_universalprogram/features/main/presentation/bloc/main_bloc.dart';
-import 'package:flutter_universalprogram/features/main/presentation/widgets/function_widget.dart';
+import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/defaul_cut_widget.dart';
 
 class TimeLineWidget extends StatelessWidget {
   ElementEntity elementEntity;
+  late double clickPosition;
   TimeLineWidget({Key? key, required this.elementEntity}) : super(key: key);
 
   @override
@@ -26,18 +27,20 @@ class TimeLineWidget extends StatelessWidget {
             ),
           ),
           child: GestureDetector(
-            onLongPress: () {},
             onTapDown: (data) {
+              clickPosition = data.localPosition.dx;
+            },
+            onDoubleTap: () {
               MainBloc mainBloc = BlocProvider.of<MainBloc>(context);
               var width = constraints.maxWidth;
 
               mainBloc.add(
                 AddCutOnBoardEvent(
-                  width: width,
-                  elementEntity: elementEntity,
-                  dx: data.localPosition.dx,
-                ),
+                    width: width,
+                    elementEntity: elementEntity,
+                    dx: clickPosition),
               );
+              print('tt');
             },
             child: CustomPaint(
               painter: CurvePainter(
@@ -154,7 +157,7 @@ Widget stackBuilder(double width, ElementEntity elementEntity) {
   }
 
   for (var cut in elementEntity.lineEntity.cuts) {
-    var functionWidget = FunctionWidget(
+    var functionWidget = DefaultCutWidget(
       cut: cut,
       delta: start,
     );

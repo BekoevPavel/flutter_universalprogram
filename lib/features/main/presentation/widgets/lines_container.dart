@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/presentation/bloc/main_bloc.dart';
-import 'package:flutter_universalprogram/features/main/presentation/widgets/added_element_widget.dart';
-import 'package:flutter_universalprogram/features/main/presentation/widgets/time_line_widget.dart';
+import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/element/added_element_widget.dart';
+import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/time_line_widget.dart';
 
 class LineContainer extends StatelessWidget {
   double scale = 1;

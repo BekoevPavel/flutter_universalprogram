@@ -44,3 +44,9 @@ class AddCutOnBoardEvent extends MainEvent {
 }
 
 class ScrollEvent extends MainEvent {}
+
+class ChangeTypeEnterEvent extends MainEvent {
+  String newValue;
+
+  ChangeTypeEnterEvent({required this.newValue});
+}

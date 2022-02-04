@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
+import 'dart:math' as math;
 
 class ScaleParams {
   int countLines;
@@ -24,8 +26,9 @@ class LineContainerSourse {
 
   List<Cut> getCalculateCuts(List<Cut> cuts, double width, double pos) {
     var oldCut = _foundCutClicked(cuts, pos);
-    var center = oldCut.pointsMap[PositionCut.left]! +
-        oldCut.pointsMap[PositionCut.width]! / 2;
+    var center = (oldCut.pointsMap[PositionCut.left]! +
+            oldCut.pointsMap[PositionCut.width]! / 2)
+        .abs();
     var newCut = Cut(id: cuts.length);
 
     var right = oldCut.pointsMap[PositionCut.right];
@@ -34,8 +37,8 @@ class LineContainerSourse {
     if (pos <= center) {
       oldCut.pointsMap = {
         PositionCut.left: pos,
-        PositionCut.width: right! - pos,
-        PositionCut.right: right
+        PositionCut.right: right!,
+        PositionCut.width: right - pos,
       };
       newCut.pointsMap = {
         PositionCut.left: left!,
@@ -43,18 +46,26 @@ class LineContainerSourse {
         PositionCut.width: pos - left
       };
     } else {
-      oldCut.pointsMap = {
-        PositionCut.right: pos,
-        PositionCut.width: pos - left!,
-        PositionCut.left: left
-      };
       newCut.pointsMap = {
         PositionCut.left: pos,
         PositionCut.right: right!,
-        PositionCut.width: right - pos
+        PositionCut.width: (right - pos).abs()
+      };
+      oldCut.pointsMap = {
+        PositionCut.left: left!,
+        PositionCut.right: pos,
+        PositionCut.width: (pos - left).abs(),
       };
     }
+    // for (var cut in cuts) {
+    //   print('before id:${cut.id} map: ${cut.pointsMap}');
+    // }
+
+    newCut.color =
+        Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(0.3);
+
     cuts.add(newCut);
+
     return cuts;
   }
 

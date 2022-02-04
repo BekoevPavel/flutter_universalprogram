@@ -1,17 +1,20 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_universalprogram/features/main/domain/sourse/line_container_sourse.dart';
+import 'dart:math' as math;
 
 enum PositionCut { left, width, right }
 
 class LineEntity {
   List<Cut> _cuts = [
     Cut(
-      id: 0,
-      pointsMap_: {
-        PositionCut.left: 0.0,
-        PositionCut.width: 12.0,
-        PositionCut.right: 10
-      },
-    ),
+        id: 0,
+        pointsMap_: {
+          PositionCut.left: 0.0,
+          PositionCut.width: 12.0,
+          PositionCut.right: 10
+        },
+        color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+            .withOpacity(0.3)),
   ];
   late double scale = 1;
 
@@ -21,23 +24,12 @@ class LineEntity {
     var left = rightCut.pointsMap[PositionCut.left];
     rightCut.pointsMap[PositionCut.width] = width - left!;
     rightCut.pointsMap[PositionCut.right] = width;
-    print('width ${cuts.length}');
   }
 
   void addCut(double pos) {
     double width = 200;
     LineContainerSourse lineContainer = LineContainerSourse();
     _cuts = lineContainer.getCalculateCuts(cuts, width, pos);
-
-    // Cut cut = Cut(
-    //   id: _cuts.length,
-    //   pointsMap_: {
-    //     PositionCut.left: pos,
-    //     PositionCut.width: width,
-    //     PositionCut.right: pos + width
-    //   },
-    // );
-    // _cuts.add(cut);
   }
 
   List<Cut> get cuts => _cuts;
@@ -45,9 +37,10 @@ class LineEntity {
 
 class Cut {
   int id;
+  Color? color;
 
   Map<PositionCut, double>? pointsMap_;
-  Cut({required this.id, this.pointsMap_});
+  Cut({required this.id, this.pointsMap_, this.color});
 
   Map<PositionCut, double> get pointsMap {
     return pointsMap_ ??
