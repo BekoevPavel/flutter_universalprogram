@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
-import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
-
 import 'package:flutter_universalprogram/features/main/domain/sourse/line_container_sourse.dart';
 import 'package:flutter_universalprogram/features/main/presentation/bloc/main_bloc.dart';
-import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/defaul_cut_widget.dart';
+import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/cuts/defaul_cut_widget.dart';
+import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/dial_widget.dart';
+import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/my_painter.dart';
 
 class TimeLineWidget extends StatelessWidget {
   ElementEntity elementEntity;
-  late double clickPosition;
+  double clickPosition = 0;
   TimeLineWidget({Key? key, required this.elementEntity}) : super(key: key);
 
   @override
@@ -40,10 +39,9 @@ class TimeLineWidget extends StatelessWidget {
                     elementEntity: elementEntity,
                     dx: clickPosition),
               );
-              print('tt');
             },
             child: CustomPaint(
-              painter: CurvePainter(
+              painter: MyPainter(
                 elementEntity: elementEntity,
                 height: 100,
                 width: constraints.maxWidth,
@@ -60,85 +58,6 @@ class TimeLineWidget extends StatelessWidget {
   }
 }
 
-class CurvePainter extends CustomPainter {
-  int delta = 50;
-  double width;
-  int height;
-  ElementEntity elementEntity;
-  //BuildContext context;
-
-  //double scale;
-  LineContainerSourse lineContainerSourse = LineContainerSourse();
-
-  CurvePainter(
-      {required this.height, required this.width, required this.elementEntity});
-
-  void update(double widht, int height) {
-    this.width = widht;
-    this.height = height;
-  }
-
-  void drawCuts(Canvas canvas, Size size, List<ElementEntity> enitities) {
-    //print('count entities ${enitities.length}');
-    ScaleParams scaleParams = lineContainerSourse.getScalePoint(size.width);
-
-    for (var cut in elementEntity.lineEntity.cuts) {
-      Paint paint = Paint();
-      paint.color = Colors.black;
-      double x1 = cut.pointsMap[PositionCut.left]!;
-      double y1 = 0;
-
-      double x2 = cut.pointsMap[PositionCut.left]!;
-      double y2 = 100;
-
-      var start = Offset(
-          (x1 * AllData.getInstance().scaleTimeLine) - scaleParams.start, y1);
-      var end = Offset(
-          (x2 * AllData.getInstance().scaleTimeLine) - scaleParams.start, y2);
-      if (start.dx > 0 && start.dx < size.width)
-        canvas.drawLine(start, end, paint);
-    }
-  }
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    //print(size);
-    Path path = Path();
-    Paint paint = Paint();
-
-    paint.color = Colors.red;
-    final delta_ = width / 15;
-    paint.strokeWidth = 0.45;
-
-    ScaleParams scaleParams = lineContainerSourse.getScalePoint(width);
-
-    for (int i = 0; i < scaleParams.countLines; i++) {
-      double x1 = i * scaleParams.delta;
-      double y1 = 0;
-
-      double x2 = i * scaleParams.delta;
-      double y2 = 50;
-
-      double minus_x = scaleParams.start;
-
-      var start = Offset(x1 - minus_x, y1);
-      var end = Offset(x2 - minus_x, y2);
-
-      if (start.dx > 0 && start.dx < size.width)
-        canvas.drawLine(start, end, paint);
-    }
-    var entities = AllData.getInstance().elementEntities;
-    drawCuts(canvas, size, entities);
-    path.close();
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    // TODO: implement shouldRepaint
-    return true;
-  }
-}
-
 Widget stackBuilder(double width, ElementEntity elementEntity) {
   List<Widget> widgets = [];
 
@@ -146,15 +65,12 @@ Widget stackBuilder(double width, ElementEntity elementEntity) {
   var delta = LineContainerSourse().getScalePoint(width).delta;
   var countLines = LineContainerSourse().getScalePoint(width).countLines;
 
-  for (int i = 0; i < countLines; i++) {
-    var textWidget = Positioned(
-      left: i * delta - start,
-      bottom: 10,
-      child: Text('${i * 5}'),
-    );
-    if (i * delta - start > 0 && i * delta - start < width)
-      widgets.add(textWidget);
-  }
+  widgets = dialWidget(
+      delta: delta,
+      start: start,
+      width: width,
+      widgets: widgets,
+      countLines: countLines);
 
   for (var cut in elementEntity.lineEntity.cuts) {
     var functionWidget = DefaultCutWidget(
