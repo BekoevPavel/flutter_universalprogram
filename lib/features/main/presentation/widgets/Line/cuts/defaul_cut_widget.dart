@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
-import 'dart:math' as math;
 
-import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/output_cut_widget.dart';
-
-import 'input_cut_widget.dart';
+import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/cuts/output_cut_widget.dart';
 
 class DefaultCutWidget extends StatelessWidget {
   Cut cut;
