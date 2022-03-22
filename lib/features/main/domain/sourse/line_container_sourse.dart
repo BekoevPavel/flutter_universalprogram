@@ -90,4 +90,23 @@ class LineContainerSourse {
     }
     return cuts[index - 1];
   }
+
+  void calculeTimeOnLine() {
+    var posAnimate = AllData.getInstance().posAnimate.value;
+    var localPosAminate = posAnimate - 172.0;
+    var scale = AllData.getInstance().scaleTimeLine;
+    var scroll = AllData.getInstance().scrollK;
+
+    print(scroll);
+
+    /*
+1 = 1767.1
+x = localPos
+
+x = localPos * 5 / 66
+
+    */
+    AllData.getInstance().currentTime.value =
+        ((localPosAminate + scroll) * 5 / 67.1) / scale;
+  }
 }
