@@ -8,29 +8,27 @@ class InputCutWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Контрольная переменная: ',
-            style: TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-            ),
-            textWidthBasis: TextWidthBasis.parent,
-          ),
-          Container(
-            width: 50,
-            child: TextFormField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20),
-                  borderSide: const BorderSide(color: Colors.green, width: 2),
+          Row(
+            children: [
+              const Text(
+                'Контрольная переменная: ',
+                style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
                 ),
-                labelText: 'Переменная ${cut.id}',
-                hintText: 'Введите переменную',
+                textWidthBasis: TextWidthBasis.parent,
               ),
-            ),
+              Container(
+                width: 50,
+                child: const Text('K'),
+              ),
+            ],
           ),
+          const Text('f() = dP2 * dP1'),
+          const Text('real time value = '),
         ],
       ),
     );

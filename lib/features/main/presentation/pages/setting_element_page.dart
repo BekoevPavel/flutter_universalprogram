@@ -1,53 +1,86 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
 import 'package:flutter_universalprogram/features/main/presentation/bloc/main_bloc.dart';
+import 'package:flutter_universalprogram/features/main/presentation/pages/search_page.dart';
 import 'package:flutter_universalprogram/features/main/presentation/widgets/setting/change_entertype_widget.dart';
 import 'package:flutter_universalprogram/features/main/presentation/widgets/setting/input_widget.dart';
 import 'package:flutter_universalprogram/features/main/presentation/widgets/setting/list_frypins_widget.dart';
-import 'package:flutter_universalprogram/features/main/presentation/widgets/setting/listpin_widget.dart';
 import 'package:flutter_universalprogram/features/main/presentation/widgets/setting/output_widget.dart';
 
 class SettingElementPage extends StatelessWidget {
-  bool? addedWidget = false;
-  SettingElementPage(this.addedWidget, {Key? key}) : super(key: key);
+  ElementEntity elementEntity;
+  late String dropdownValue;
+
+  SettingElementPage({Key? key, required this.elementEntity})
+      : super(key: key) {
+    dropdownValue = elementEntity.typeEnter == TypeEnter.input
+        ? 'Input Element'
+        : 'OutPut Element';
+  }
+
+  //Controllers
   TextEditingController _nameController = TextEditingController();
   TextEditingController _functionController = TextEditingController();
   List<TextEditingController> _pinsFuncController = [];
-  late Future<List<dynamic>> datas;
-  String dropdownValue = 'Input Element';
+  //late Future<List<dynamic>> datas;
 
   @override
   Widget build(BuildContext context) {
-    //final MainBloc userBloc = BlocProvider.of<MainBloc>(context);
+    _nameController.text = elementEntity.nameElement;
+    // typeEnter = elementEntity.typeEnter ?? TypeEnter.output;
+    // if (typeEnter == TypeEnter.input) {
+    //   dropdownValue == 'Input Element';
+    // } else {
+    //   dropdownValue == 'OutPut Element';
+    // }
+    // print(typeEnter);
     return Scaffold(
-      body: Center(
-        child: Container(
-            width: 400,
-            decoration: BoxDecoration(
-              color: Colors.grey[100],
-              border: Border.all(
-                color: Colors.green,
-              ),
-            ),
-            padding: const EdgeInsets.all(20),
-            child: BlocBuilder<MainBloc, MainState>(builder: (context, state) {
-              MainBloc mainBloc = BlocProvider.of<MainBloc>(context);
-              if (state is ChangeTypeEnterState) {
-                dropdownValue = (state as ChangeTypeEnterState).newValue;
-              }
-              //print('set');
+      body: Container(
+        //width: 400,
+        decoration: BoxDecoration(
+          color: Colors.grey[100],
+          border: Border.all(
+            color: Colors.green,
+          ),
+        ),
+        padding: const EdgeInsets.all(20),
+        child: BlocBuilder<MainBloc, MainState>(
+          builder: (context, state) {
+            MainBloc mainBloc = BlocProvider.of<MainBloc>(context);
+            if (state is ChangeTypeEnterState) {
+              dropdownValue = (state as ChangeTypeEnterState).newValue;
+              elementEntity.typeEnter =
+                  (state as ChangeTypeEnterState).typeEnter;
+            }
+            //print('set');
 
-              return Form(
-                child: Column(
-                  children: [
-                    ChangeEnterTypeWidget(
-                      mainBloc: mainBloc,
-                      dropdownValue: dropdownValue,
-                    ),
-                    ListFryPinsWidget(),
-                    TextFormField(
+            return Form(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      const Text(
+                        'Тип элемента:',
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      ChangeEnterTypeWidget(
+                        mainBloc: mainBloc,
+                        dropdownValue: dropdownValue,
+                        typeEnter: elementEntity.typeEnter ?? TypeEnter.output,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Container(
+                    width: 300,
+                    child: TextFormField(
                       controller: _nameController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(
@@ -57,36 +90,45 @@ class SettingElementPage extends StatelessWidget {
                         hintText: 'Введите название элемента',
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    dropdownValue == 'Input Element'
-                        ? InputElementWidget()
-                        : OutPutElementWidget(),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    IconButton(
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Divider(),
+                  elementEntity.typeEnter == TypeEnter.input
+                      ? InputElementWidget()
+                      : OutPutElementWidget(
+                          elementEntity: elementEntity,
+                        ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: IconButton(
                       iconSize: 50,
                       onPressed: () {
-                        var id = AllData.getInstance()
-                            .elementEntities
-                            .length; // изменить когда сделаю удаление, что корректно считался номер id
-                        ElementEntity elementEntity = ElementEntity(
-                            nameElement: _nameController.text, id: id);
+                        elementEntity.typeEnter ??= TypeEnter.output;
+                        elementEntity.nameElement = _nameController.text;
                         MainBloc userBloc = BlocProvider.of<MainBloc>(context);
-                        userBloc.add(CloseSettingElementEvent(
-                            context, addedWidget!, elementEntity));
+                        userBloc.add(
+                          CloseSettingElementEvent(
+                            context,
+                            elementEntity,
+                          ),
+                        );
                       },
                       icon: const Icon(
                         Icons.save,
                         color: Colors.green,
                       ),
                     ),
-                  ],
-                ),
-              );
-            })),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

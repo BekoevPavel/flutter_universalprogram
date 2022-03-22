@@ -7,6 +7,8 @@ class OutputCutWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController _funcController = TextEditingController();
+    _funcController.text = '0';
     return Container(
       child: Row(
         children: [
@@ -17,6 +19,7 @@ class OutputCutWidget extends StatelessWidget {
           Container(
             width: 100,
             child: TextFormField(
+              controller: _funcController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),

@@ -7,24 +7,16 @@ class ElementEntity {
 
   late LineEntity lineEntity;
   int id = 0;
-  String? nameElement;
+  String nameElement;
   String? function;
   List<String>? functionsForPins;
   ElementEntity({
     required this.nameElement,
     required this.id,
-    String? func,
-    List<String>? funcForPins,
     this.typeEnter,
+    this.function,
+    this.functionsForPins,
   }) {
     lineEntity = LineEntity();
-    //
-    if (func != null) {
-      function = func;
-    }
-    if (funcForPins != null) {
-      functionsForPins = funcForPins;
-    }
-    //
   }
 }

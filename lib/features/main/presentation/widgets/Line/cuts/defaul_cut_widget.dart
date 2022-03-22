@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
+import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
 
 import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/cuts/output_cut_widget.dart';
 
+import 'input_cut_widget.dart';
+
 class DefaultCutWidget extends StatelessWidget {
+  ElementEntity elementEntity;
   Cut cut;
   double delta;
-  DefaultCutWidget({Key? key, required this.cut, required this.delta})
+  DefaultCutWidget(
+      {Key? key,
+      required this.cut,
+      required this.delta,
+      required this.elementEntity})
       : super(key: key);
 
   @override
@@ -24,9 +32,13 @@ class DefaultCutWidget extends StatelessWidget {
               AllData.getInstance().scaleTimeLine,
           height: 100,
           color: cut.color,
-          child: OutputCutWidget(
-            cut: cut,
-          ),
+          child: elementEntity.typeEnter == TypeEnter.input
+              ? InputCutWidget(
+                  cut: cut,
+                )
+              : OutputCutWidget(
+                  cut: cut,
+                ),
         ),
       ),
     );

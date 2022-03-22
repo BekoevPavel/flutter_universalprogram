@@ -17,15 +17,31 @@ class MainInitialState extends MainState {
     var allData = AllData.getInstance();
 
     ElementEntity startElem = ElementEntity(nameElement: 'None', id: 0);
-    allData.addEntity(startElem);
+    allData.elementEntities.add(startElem);
   }
 }
 
 class OpenSettingElementState extends MainState {
   BuildContext context;
-  bool state = false;
-  OpenSettingElementState(this.context, state) {
-    Navigator.pushNamed(context, '/setting_element', arguments: state);
+  ElementEntity elementEntity;
+
+  OpenSettingElementState(
+      {required this.context, required this.elementEntity}) {
+    Navigator.pushNamed(context, '/setting_element', arguments: elementEntity);
+  }
+}
+
+class AddElementState extends MainState {
+  BuildContext context;
+  AddElementState({required this.context}) {
+    ElementEntity elementEntity = ElementEntity(
+      nameElement: 'None',
+      id: AllData.getInstance().elementEntities.length,
+    );
+
+    AllData.getInstance().elementEntities.add(elementEntity);
+
+    Navigator.pushNamed(context, '/setting_element', arguments: elementEntity);
   }
 }
 
@@ -35,13 +51,12 @@ class CloseSettingElementState extends MainState {
   BuildContext context;
   bool state = false;
 
-  CloseSettingElementState(this.context, this.state,
-      [ElementEntity? elemEntity]) {
-    if (elemEntity != null) {
-      Navigator.of(context).pop();
-      elementEntity = elemEntity;
-      if (state) AllData.getInstance().addEntity(elementEntity!);
-    }
+  CloseSettingElementState(
+    this.context,
+  ) {
+    Navigator.of(context).pop();
+
+    // if (state) AllData.getInstance().addEntity(elementEntity!);
   }
 }
 
@@ -75,7 +90,15 @@ class AddCutOnBoardState extends MainState {
 
 class ChangeTypeEnterState extends MainState {
   String newValue;
-  ChangeTypeEnterState({required this.newValue}) {
-    print('az');
+  TypeEnter typeEnter;
+  ChangeTypeEnterState({required this.newValue, required this.typeEnter}) {}
+}
+
+class AddPinState extends MainState {
+  int number;
+  TypePin typePin;
+  AddPinState({required this.typePin, required this.number}) {
+    AllData.getInstance().pins.add(Pin(typePin: typePin, number: number));
+    print('pin added');
   }
 }

@@ -36,6 +36,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_bloc: ^8.0.1
   equatable: ^2.0.3
+  material_floating_search_bar: ^0.3.7
+  http: ^0.13.4
+  usb_device: ^0.0.7
+  
   
 
 dev_dependencies:

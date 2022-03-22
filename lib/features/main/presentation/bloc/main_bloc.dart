@@ -3,7 +3,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
-import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
+import 'package:flutter_universalprogram/features/main/domain/entities/pin_entity.dart';
+
 import 'package:flutter_universalprogram/features/main/domain/sourse/line_container_sourse.dart';
 
 part 'main_event.dart';
@@ -12,15 +13,28 @@ part 'main_state.dart';
 class MainBloc extends Bloc<MainEvent, MainState> {
   MainBloc() : super(MainInitialState()) {
     on<OpenSettingElementEvent>((event, emit) {
-      emit(OpenSettingElementState(event.context, event.state));
+      emit(
+        OpenSettingElementState(
+          context: event.context,
+          elementEntity: event.elementEntity,
+        ),
+      );
     });
+
+    on<AddElementEvent>((event, emit) {
+      emit(
+        AddElementState(context: event.context),
+      );
+    });
+
     on<SetScaleEvent>((event, emit) {
       emit(SetScaleState(event.scale));
     });
     on<CloseSettingElementEvent>(
       (event, emit) {
-        emit(CloseSettingElementState(
-            event.context, event.state, event.elementEntity));
+        emit(
+          CloseSettingElementState(event.context),
+        );
       },
     );
 
@@ -42,7 +56,11 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     });
 
     on<ChangeTypeEnterEvent>((event, emit) {
-      emit(ChangeTypeEnterState(newValue: event.newValue));
+      emit(ChangeTypeEnterState(
+          newValue: event.newValue, typeEnter: event.typeEnter));
     });
+
+    on<AddPinEvent>(((event, emit) =>
+        emit(AddPinState(typePin: event.typePin, number: event.number))));
   }
 }

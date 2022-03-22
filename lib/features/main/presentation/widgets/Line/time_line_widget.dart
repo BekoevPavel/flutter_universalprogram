@@ -16,7 +16,15 @@ class TimeLineWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(child: LayoutBuilder(
       builder: (BuildContext context, constraints) {
-        elementEntity.lineEntity.updateCuts(constraints.maxWidth);
+        var start =
+            LineContainerSourse().getScalePoint(constraints.maxWidth).start;
+        var delta =
+            LineContainerSourse().getScalePoint(constraints.maxWidth).delta;
+        var countLines = LineContainerSourse()
+            .getScalePoint(constraints.maxWidth)
+            .countLines;
+        var width_ = delta * countLines;
+        elementEntity.lineEntity.updateCuts(width_);
         return Container(
           height: 100,
           decoration: BoxDecoration(
@@ -76,6 +84,7 @@ Widget stackBuilder(double width, ElementEntity elementEntity) {
     var functionWidget = DefaultCutWidget(
       cut: cut,
       delta: start,
+      elementEntity: elementEntity,
     );
     widgets.add(functionWidget);
   }

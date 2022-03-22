@@ -12,8 +12,11 @@ class AddRemoveButttons extends StatelessWidget {
       children: [
         ElevatedButton(
           onPressed: () {
-            MainBloc userBloc = BlocProvider.of<MainBloc>(context);
-            userBloc.add(OpenSettingElementEvent(context, true));
+            MainBloc mainBloc = BlocProvider.of<MainBloc>(context);
+            //userBloc.add(OpenSettingElementEvent(context, true));
+            mainBloc.add(
+              AddElementEvent(context: context),
+            );
           },
           child: const Text('Добавить таймлайн'),
         ),

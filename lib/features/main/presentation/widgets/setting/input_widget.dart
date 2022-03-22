@@ -13,7 +13,23 @@ class InputElementWidget extends StatelessWidget {
         ),
         Row(
           children: [
-            const Text('f(t) ='),
+            const Text('Переменная:'),
+            Container(
+              width: 100,
+              child: TextFormField(
+                decoration: const InputDecoration(
+                  labelText: 'Перенная',
+                  hintText: '...',
+                ),
+              ),
+            ),
+            const Padding(
+              padding: EdgeInsets.only(top: 15.0),
+              child: Text(
+                '=',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
             Container(
               width: 200,
               child: TextFormField(

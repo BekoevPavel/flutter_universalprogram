@@ -4,8 +4,9 @@ import 'package:flutter_universalprogram/features/main/domain/entities/element_e
 import 'package:flutter_universalprogram/features/main/presentation/bloc/main_bloc.dart';
 
 class AddedElementWidget extends StatelessWidget {
-  ElementEntity? elementEntity;
-  AddedElementWidget({Key? key, this.elementEntity}) : super(key: key);
+  final ElementEntity elementEntity;
+  const AddedElementWidget({Key? key, required this.elementEntity})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,21 +19,27 @@ class AddedElementWidget extends StatelessWidget {
           color: Colors.green,
         ),
       ),
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(10),
       width: 160,
       height: 100,
       child: Column(
         children: [
+          Text(
+            elementEntity.typeEnter == TypeEnter.input ? 'Input' : 'Output',
+          ),
           Text(elementEntity != null
-              ? '${elementEntity!.nameElement!} id: ${elementEntity!.id}'
+              ? '${elementEntity.nameElement} id: ${elementEntity.id}'
               : 'No'),
           IconButton(
-              onPressed: () {
-                userBloc.add(
-                  OpenSettingElementEvent(context, false),
-                );
-              },
-              icon: const Icon(Icons.settings))
+            iconSize: 20,
+            onPressed: () {
+              userBloc.add(
+                OpenSettingElementEvent(
+                    context: context, elementEntity: elementEntity),
+              );
+            },
+            icon: const Icon(Icons.settings),
+          ),
         ],
       ),
     );

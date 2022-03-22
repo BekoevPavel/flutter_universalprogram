@@ -1,22 +1,15 @@
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
+import 'package:flutter_universalprogram/features/main/domain/entities/pin_entity.dart';
 
 class AllData {
   double scaleTimeLine = 1;
   double scrollK = 1;
 
+  List<Pin> pins = [];
+
   static AllData? _instance;
   AllData._();
-  List<ElementEntity> _elementEntities = [];
-
-  void addEntity(ElementEntity elementEntity) {
-    int oldID = _elementEntities.length;
-
-    _elementEntities.add(elementEntity);
-  }
-
-  List<ElementEntity> get elementEntities {
-    return _elementEntities;
-  }
+  List<ElementEntity> elementEntities = [];
 
   static AllData getInstance() {
     return _instance ??= AllData._();

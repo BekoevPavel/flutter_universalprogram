@@ -12,16 +12,20 @@ class MainInitialEvent extends MainEvent {}
 
 class OpenSettingElementEvent extends MainEvent {
   BuildContext context;
-  bool state = false;
-  OpenSettingElementEvent(this.context, this.state);
+  ElementEntity elementEntity;
+  OpenSettingElementEvent({required this.context, required this.elementEntity});
+}
+
+class AddElementEvent extends MainEvent {
+  BuildContext context;
+  AddElementEvent({required this.context});
 }
 
 class CloseSettingElementEvent extends MainEvent {
   ElementEntity? elementEntity;
   BuildContext context;
-  bool state = false;
-  CloseSettingElementEvent(this.context, this.state,
-      [ElementEntity? elemEntity]) {
+
+  CloseSettingElementEvent(this.context, [ElementEntity? elemEntity]) {
     if (elemEntity != null) {
       elementEntity = elemEntity;
     }
@@ -47,6 +51,13 @@ class ScrollEvent extends MainEvent {}
 
 class ChangeTypeEnterEvent extends MainEvent {
   String newValue;
+  TypeEnter typeEnter;
 
-  ChangeTypeEnterEvent({required this.newValue});
+  ChangeTypeEnterEvent({required this.newValue, required this.typeEnter});
+}
+
+class AddPinEvent extends MainEvent {
+  int number;
+  TypePin typePin;
+  AddPinEvent({required this.typePin, required this.number});
 }
