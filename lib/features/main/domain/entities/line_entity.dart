@@ -38,6 +38,7 @@ class LineEntity {
 class Cut {
   int id;
   Color? color;
+  String? function;
 
   Map<PositionCut, double>? pointsMap_;
   Cut({required this.id, this.pointsMap_, this.color});
@@ -49,5 +50,9 @@ class Cut {
 
   set pointsMap(Map<PositionCut, double> currentMap) {
     pointsMap_ = currentMap;
+  }
+
+  double getCurrentF() {
+    return 0;
   }
 }

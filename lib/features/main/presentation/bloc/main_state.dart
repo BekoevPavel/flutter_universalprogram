@@ -64,6 +64,7 @@ class SetScaleState extends MainState {
   double scale = 1;
   SetScaleState(this.scale) {
     AllData.getInstance().scaleTimeLine = scale;
+    LineContainerSourse().calculeTimeOnLine();
   }
 }
 

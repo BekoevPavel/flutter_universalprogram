@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
 
 class OutputCutWidget extends StatelessWidget {
   Cut cut;
-  OutputCutWidget({Key? key, required this.cut}) : super(key: key);
+  ElementEntity elementEntity;
+
+  OutputCutWidget({Key? key, required this.cut, required this.elementEntity})
+      : super(key: key);
+  late TextEditingController _funcController =
+      TextEditingController(text: cut.function ?? '0');
+  late FocusNode myFocusNode = FocusNode();
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController _funcController = TextEditingController();
-    _funcController.text = '0';
     return Container(
       child: Row(
         children: [
@@ -19,6 +24,12 @@ class OutputCutWidget extends StatelessWidget {
           Container(
             width: 100,
             child: TextFormField(
+              focusNode: myFocusNode,
+              onEditingComplete: () {
+                print('func: ${_funcController.text}');
+                cut.function = _funcController.text;
+                myFocusNode.unfocus();
+              },
               controller: _funcController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(

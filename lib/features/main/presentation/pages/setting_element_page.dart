@@ -96,7 +96,9 @@ class SettingElementPage extends StatelessWidget {
                   ),
                   const Divider(),
                   elementEntity.typeEnter == TypeEnter.input
-                      ? InputElementWidget()
+                      ? InputElementWidget(
+                          elementEntity: elementEntity,
+                        )
                       : OutPutElementWidget(
                           elementEntity: elementEntity,
                         ),

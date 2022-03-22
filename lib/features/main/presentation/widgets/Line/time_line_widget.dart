@@ -1,25 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
 import 'package:flutter_universalprogram/features/main/domain/sourse/line_container_sourse.dart';
 import 'package:flutter_universalprogram/features/main/presentation/bloc/main_bloc.dart';
 import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/cuts/defaul_cut_widget.dart';
 import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/dial_widget.dart';
 import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/my_painter.dart';
+import 'package:get/get.dart';
 
 class TimeLineWidget extends StatelessWidget {
   ElementEntity elementEntity;
   double clickPosition = 0;
   TimeLineWidget({Key? key, required this.elementEntity}) : super(key: key);
+  GlobalKey globalKey = GlobalKey();
+  @override
+  // TODO: implement key
+  Key? get key => globalKey;
 
   @override
   Widget build(BuildContext context) {
+    //AllData.getInstance().minPosAnimation  = context.findRenderObject().po
+
     return Flexible(child: LayoutBuilder(
       builder: (BuildContext context, constraints) {
         var start =
             LineContainerSourse().getScalePoint(constraints.maxWidth).start;
+
         var delta =
             LineContainerSourse().getScalePoint(constraints.maxWidth).delta;
+        print('delta: $delta');
         var countLines = LineContainerSourse()
             .getScalePoint(constraints.maxWidth)
             .countLines;

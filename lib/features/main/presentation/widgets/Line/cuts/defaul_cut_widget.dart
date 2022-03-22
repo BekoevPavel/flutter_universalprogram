@@ -35,9 +35,11 @@ class DefaultCutWidget extends StatelessWidget {
           child: elementEntity.typeEnter == TypeEnter.input
               ? InputCutWidget(
                   cut: cut,
+                  elementEntity: elementEntity,
                 )
               : OutputCutWidget(
                   cut: cut,
+                  elementEntity: elementEntity,
                 ),
         ),
       ),

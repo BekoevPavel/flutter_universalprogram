@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/presentation/bloc/main_bloc.dart';
 
+import '../../../domain/sourse/line_container_sourse.dart';
+
 class ProgressBarWidget extends StatefulWidget {
   MainBloc mainBloc;
   ProgressBarWidget({Key? key, required this.mainBloc}) : super(key: key);
@@ -50,6 +52,7 @@ class _ProgressBarWidgetState extends State<ProgressBarWidget> {
             if (delta_x > 0 &&
                 delta_x < progres_key.currentContext!.size!.width) {
               width = progres_key.currentContext!.size!.width;
+              LineContainerSourse().calculeTimeOnLine();
               setState(
                 () {
                   delta_x = onDrag.localPosition.dx;

@@ -39,6 +39,8 @@ dependencies:
   material_floating_search_bar: ^0.3.7
   http: ^0.13.4
   usb_device: ^0.0.7
+  get: ^4.6.1
+  math_expressions: ^2.3.0
   
   
 

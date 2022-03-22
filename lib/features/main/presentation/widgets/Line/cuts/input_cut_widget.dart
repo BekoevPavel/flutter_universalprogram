@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
 
 class InputCutWidget extends StatelessWidget {
   Cut cut;
-  InputCutWidget({Key? key, required this.cut}) : super(key: key);
+  ElementEntity elementEntity;
+  InputCutWidget({Key? key, required this.cut, required this.elementEntity})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +26,15 @@ class InputCutWidget extends StatelessWidget {
               ),
               Container(
                 width: 50,
-                child: const Text('K'),
+                child: Text(
+                  elementEntity.inputVariable ?? 'None',
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.red[400]),
+                ),
               ),
             ],
           ),
-          const Text('f() = dP2 * dP1'),
+          Text('f() = ${elementEntity.inputFunction}'),
           const Text('real time value = '),
         ],
       ),
