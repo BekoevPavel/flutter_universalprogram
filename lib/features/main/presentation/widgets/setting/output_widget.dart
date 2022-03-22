@@ -34,7 +34,9 @@ class OutPutElementWidget extends StatelessWidget {
             Container(
               width: 300,
               height: 300,
-              child: SearchWidget(),
+              child: SearchWidget(
+                elementEntity: elementEntity,
+              ),
             ),
           ],
         ),
