@@ -30,6 +30,13 @@ class OutputCutWidget extends StatelessWidget {
               ),
             ),
           ),
+          const Padding(
+            padding: EdgeInsets.only(left: 5.0),
+            child: Text(
+              'real\ntime:\n 4',
+              style: TextStyle(color: Colors.red),
+            ),
+          )
         ],
       ),
     );

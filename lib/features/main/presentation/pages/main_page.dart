@@ -11,19 +11,32 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          const SizedBox(
-            height: 30,
+          Column(
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              const AddRemoveButttons(),
+              const SizedBox(
+                height: 20,
+              ),
+              const Expanded(
+                child: LineContainer(),
+              ),
+              _settingLinesWidget(context),
+            ],
           ),
-          const AddRemoveButttons(),
-          const SizedBox(
-            height: 20,
-          ),
-          const Expanded(
-            child: LineContainer(),
-          ),
-          _settingLinesWidget(context),
+          Positioned(
+            left: 400,
+            bottom: 65,
+            child: Container(
+              width: 1,
+              height: 800,
+              color: Colors.red,
+            ),
+          )
         ],
       ),
     );

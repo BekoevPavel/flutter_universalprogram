@@ -95,10 +95,14 @@ class ChangeTypeEnterState extends MainState {
 }
 
 class AddPinState extends MainState {
+  ElementEntity elementEntity;
   int number;
   TypePin typePin;
-  AddPinState({required this.typePin, required this.number}) {
-    AllData.getInstance().pins.add(Pin(typePin: typePin, number: number));
+  AddPinState(
+      {required this.typePin,
+      required this.number,
+      required this.elementEntity}) {
+    elementEntity.pins.add(Pin(typePin: typePin, number: number));
     print('pin added');
   }
 }

@@ -5,7 +5,7 @@ class AllData {
   double scaleTimeLine = 1;
   double scrollK = 1;
 
-  List<Pin> pins = [];
+  //List<Pin> pins = [];
 
   static AllData? _instance;
   AllData._();

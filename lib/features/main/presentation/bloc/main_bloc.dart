@@ -60,7 +60,9 @@ class MainBloc extends Bloc<MainEvent, MainState> {
           newValue: event.newValue, typeEnter: event.typeEnter));
     });
 
-    on<AddPinEvent>(((event, emit) =>
-        emit(AddPinState(typePin: event.typePin, number: event.number))));
+    on<AddPinEvent>(((event, emit) => emit(AddPinState(
+        typePin: event.typePin,
+        number: event.number,
+        elementEntity: event.elementEntity))));
   }
 }

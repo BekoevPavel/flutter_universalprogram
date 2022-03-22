@@ -97,10 +97,10 @@ class ListPinFuncWidget extends StatelessWidget {
 
   Widget _listPins() {
     return ListView.builder(
-        itemCount: AllData.getInstance().pins.length,
+        itemCount: elementEntity.pins.length,
         itemBuilder: (BuildContext context, index) {
-          return _pinFuncWidget(AllData.getInstance().pins[index].typePin,
-              AllData.getInstance().pins[index].number);
+          return _pinFuncWidget(elementEntity.pins[index].typePin,
+              elementEntity.pins[index].number);
         });
   }
 }

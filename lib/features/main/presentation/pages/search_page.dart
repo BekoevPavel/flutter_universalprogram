@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
+import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
 import 'package:flutter_universalprogram/features/main/domain/sourse/pins_sourse.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
@@ -8,7 +9,8 @@ import '../../domain/entities/pin_entity.dart';
 import '../bloc/main_bloc.dart';
 
 class SearchWidget extends StatefulWidget {
-  SearchWidget({Key? key}) : super(key: key);
+  ElementEntity elementEntity;
+  SearchWidget({Key? key, required this.elementEntity}) : super(key: key);
 
   @override
   State<SearchWidget> createState() => _SearchWidgetState();
@@ -28,18 +30,16 @@ class _SearchWidgetState extends State<SearchWidget> {
     'analogPin2',
     'analogPin3',
   ];
-  var newPins = [];
 
   @override
   void initState() {
     // TODO: implement initState
-    newPins = pins;
     print('update');
   }
 
   @override
   Widget build(BuildContext context) {
-    for (var i in AllData.getInstance().pins) {
+    for (var i in widget.elementEntity.pins) {
       removePinInVariblesList(pins, i);
     }
     final isPortrait =
@@ -60,13 +60,14 @@ class _SearchWidgetState extends State<SearchWidget> {
         width: isPortrait ? 600 : 500,
         debounceDelay: const Duration(milliseconds: 500),
         onQueryChanged: (query) {
-          //print(query);
-          newPins = [];
-          userBloc.add(AddPinEvent(
-              typePin: query.split('').first == 'd'
-                  ? TypePin.digital
-                  : TypePin.analog,
-              number: int.parse(query.split('').last)));
+          userBloc.add(
+            AddPinEvent(
+                typePin: query.split('').first == 'd'
+                    ? TypePin.digital
+                    : TypePin.analog,
+                number: int.parse(query.split('').last),
+                elementEntity: widget.elementEntity),
+          );
 
           // Call your model, bloc, controller here.
         },

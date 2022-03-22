@@ -57,7 +57,11 @@ class ChangeTypeEnterEvent extends MainEvent {
 }
 
 class AddPinEvent extends MainEvent {
+  ElementEntity elementEntity;
   int number;
   TypePin typePin;
-  AddPinEvent({required this.typePin, required this.number});
+  AddPinEvent(
+      {required this.typePin,
+      required this.number,
+      required this.elementEntity});
 }
