@@ -14,7 +14,6 @@ class ElementEntity {
 
   String? inputVariable;
   String? inputFunction;
-
   ElementEntity({
     required this.nameElement,
     required this.id,

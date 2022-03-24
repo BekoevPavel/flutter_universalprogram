@@ -27,9 +27,14 @@ Future<void> webSoketsWork() async {
             if (ws.readyState ==
                 WebSocket
                     .open) // checking whether connection is open or not, is required before writing anything on socket
-              ws.add(json.encode({
-                'data': 'from client at ${DateTime.now().toString()}',
-              }));
+              ws.add(
+                json.encode(
+                  {
+                    'data':
+                        'from client at сам ты лох ${DateTime.now().toString()}',
+                  },
+                ),
+              );
           });
         },
         onDone: () => print('[+]Done :)'),

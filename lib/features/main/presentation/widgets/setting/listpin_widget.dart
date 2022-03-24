@@ -39,7 +39,10 @@ class ListPinFuncWidget extends StatelessWidget {
     );
   }
 
-  Widget _pinFuncWidget(TypePin typePin, int number) {
+  Widget _pinFuncWidget(Pin pin) {
+    FocusNode myFocusNodeFunction = FocusNode();
+    TextEditingController _textController =
+        TextEditingController(text: pin.function);
     return Container(
       margin: const EdgeInsets.all(2),
       padding: const EdgeInsets.all(2),
@@ -55,7 +58,7 @@ class ListPinFuncWidget extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 15),
             child: Text(
-              'f(${typePin == TypePin.digital ? 'd' : 'a'}P$number)=',
+              'f(${pin.typePin == TypePin.digital ? 'd' : 'a'}P${pin.number})=',
               style: TextStyle(fontSize: 16),
             ),
           ),
@@ -65,6 +68,13 @@ class ListPinFuncWidget extends StatelessWidget {
           Container(
             width: 200,
             child: TextFormField(
+              controller: _textController,
+              focusNode: myFocusNodeFunction,
+              onEditingComplete: () {
+                myFocusNodeFunction.unfocus();
+                pin.function = _textController.text;
+                //elementEntity.functions.add(value)
+              },
               decoration: const InputDecoration(
                 labelText: 'Функция F(t) *',
                 hintText: 'Введите функцию F(t)',
@@ -99,8 +109,7 @@ class ListPinFuncWidget extends StatelessWidget {
     return ListView.builder(
         itemCount: elementEntity.pins.length,
         itemBuilder: (BuildContext context, index) {
-          return _pinFuncWidget(elementEntity.pins[index].typePin,
-              elementEntity.pins[index].number);
+          return _pinFuncWidget(elementEntity.pins[index]);
         });
   }
 }

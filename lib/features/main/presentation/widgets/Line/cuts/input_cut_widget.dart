@@ -14,27 +14,24 @@ class InputCutWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          const Text(
+            'Контрольная переменная: ',
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: FontWeight.bold,
+            ),
+            textWidthBasis: TextWidthBasis.parent,
+          ),
           Row(
             children: [
-              const Text(
-                'Контрольная переменная: ',
+              Text(
+                elementEntity.inputVariable ?? 'None',
                 style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: FontWeight.bold,
-                ),
-                textWidthBasis: TextWidthBasis.parent,
+                    fontWeight: FontWeight.bold, color: Colors.red[400]),
               ),
-              Container(
-                width: 50,
-                child: Text(
-                  elementEntity.inputVariable ?? 'None',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.red[400]),
-                ),
-              ),
+              Text(' = f(t) = ${elementEntity.inputFunction}'),
             ],
           ),
-          Text('f() = ${elementEntity.inputFunction}'),
           const Text('real time value = '),
         ],
       ),

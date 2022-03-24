@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/sourse/line_container_sourse.dart';
+import 'package:get/get.dart';
 import 'dart:math' as math;
+
+import 'package:math_expressions/math_expressions.dart';
 
 enum PositionCut { left, width, right }
 
@@ -39,6 +43,30 @@ class Cut {
   int id;
   Color? color;
   String? function;
+  RxDouble _realValue = 0.0.obs;
+
+  RxDouble get realVelue {
+    ContextModel cm = ContextModel();
+    var variablesLst = AllData.getInstance().reservedVariables;
+
+    cm.bindVariable(
+        Variable('t'), Number(AllData.getInstance().currentTime.value));
+
+    for (var i in variablesLst) {
+      Variable varibleTmp = Variable(i.name);
+      cm.bindVariable(varibleTmp, Number(double.parse(i.function)));
+      MathFunction mathFunction;
+    }
+
+    Parser p = Parser();
+
+    Expression exp = p.parse(function ?? '0');
+
+    double y = exp.evaluate(EvaluationType.REAL, cm);
+
+    _realValue = RxDouble(y);
+    return _realValue;
+  }
 
   Map<PositionCut, double>? pointsMap_;
   Cut({required this.id, this.pointsMap_, this.color});

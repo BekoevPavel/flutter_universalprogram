@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
 
 class InputElementWidget extends StatelessWidget {
@@ -28,6 +29,7 @@ class InputElementWidget extends StatelessWidget {
               child: TextFormField(
                 onEditingComplete: () {
                   elementEntity.inputVariable = _textControllerVariable.text;
+
                   myFocusNodeVariable.unfocus();
                 },
                 focusNode: myFocusNodeVariable,
@@ -50,6 +52,7 @@ class InputElementWidget extends StatelessWidget {
               child: TextFormField(
                 onEditingComplete: () {
                   elementEntity.inputFunction = _textControllerFunction.text;
+
                   myFocusNodeFunction.unfocus();
                 },
                 focusNode: myFocusNodeFunction,

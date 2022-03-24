@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
+import 'package:get/get.dart';
 
 class OutputCutWidget extends StatelessWidget {
   Cut cut;
@@ -41,12 +42,14 @@ class OutputCutWidget extends StatelessWidget {
               ),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 5.0),
-            child: Text(
-              'real\ntime:\n 4',
-              style: TextStyle(color: Colors.red),
-            ),
+          Padding(
+            padding: const EdgeInsets.only(left: 5.0),
+            child: Obx(() {
+              return Text(
+                'real\ntime:\n ${cut.realVelue.toStringAsFixed(1)}',
+                style: const TextStyle(color: Colors.red),
+              );
+            }),
           )
         ],
       ),

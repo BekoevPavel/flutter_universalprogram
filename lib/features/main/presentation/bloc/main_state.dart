@@ -51,9 +51,14 @@ class CloseSettingElementState extends MainState {
   BuildContext context;
   bool state = false;
 
-  CloseSettingElementState(
-    this.context,
-  ) {
+  CloseSettingElementState(this.context, this.elementEntity) {
+    print('var: ${elementEntity}');
+    if (elementEntity?.inputVariable != null) {
+      AllData.getInstance().reservedVariables.add(ReservedVariable(
+          name: elementEntity!.inputVariable!,
+          function: elementEntity!.inputFunction!));
+    }
+
     Navigator.of(context).pop();
 
     // if (state) AllData.getInstance().addEntity(elementEntity!);

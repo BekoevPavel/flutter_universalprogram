@@ -6,6 +6,7 @@ import 'package:flutter_universalprogram/features/main/domain/entities/element_e
 import 'package:flutter_universalprogram/features/main/domain/entities/pin_entity.dart';
 
 import 'package:flutter_universalprogram/features/main/domain/sourse/line_container_sourse.dart';
+import 'package:get/get.dart';
 
 part 'main_event.dart';
 part 'main_state.dart';
@@ -33,7 +34,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     on<CloseSettingElementEvent>(
       (event, emit) {
         emit(
-          CloseSettingElementState(event.context),
+          CloseSettingElementState(event.context, event.elementEntity),
         );
       },
     );

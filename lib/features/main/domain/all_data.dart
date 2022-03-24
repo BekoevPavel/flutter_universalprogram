@@ -2,6 +2,12 @@ import 'package:flutter_universalprogram/features/main/domain/entities/element_e
 import 'package:flutter_universalprogram/features/main/domain/entities/pin_entity.dart';
 import 'package:get/get.dart';
 
+class ReservedVariable {
+  String name;
+  String function;
+  ReservedVariable({required this.name, required this.function});
+}
+
 class AllData {
   double scaleTimeLine = 1;
   double scrollK = 1;
@@ -10,6 +16,7 @@ class AllData {
   var currentTime = 0.0.obs;
 
   late double minPosAnimation;
+  List<ReservedVariable> reservedVariables = [];
 
   //List<Pin> pins = [];
 

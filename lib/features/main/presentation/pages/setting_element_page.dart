@@ -113,6 +113,7 @@ class SettingElementPage extends StatelessWidget {
                         elementEntity.typeEnter ??= TypeEnter.output;
                         elementEntity.nameElement = _nameController.text;
                         MainBloc userBloc = BlocProvider.of<MainBloc>(context);
+                        print('element: ${elementEntity}');
                         userBloc.add(
                           CloseSettingElementEvent(
                             context,
