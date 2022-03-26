@@ -8,6 +8,8 @@ import 'package:flutter_universalprogram/features/main/domain/entities/pin_entit
 import 'package:flutter_universalprogram/features/main/domain/sourse/line_container_sourse.dart';
 import 'package:get/get.dart';
 
+import '../../domain/sourse/reserved_variables_sourse.dart';
+
 part 'main_event.dart';
 part 'main_state.dart';
 
@@ -65,5 +67,15 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         typePin: event.typePin,
         number: event.number,
         elementEntity: event.elementEntity))));
+
+    on<OpenSettingFunctionEvent>((event, emit) {
+      emit(
+        OpenSettingFunctionState(context: event.context),
+      );
+    });
+
+    on<CloseSettingFunctionEvent>((event, emit) {
+      emit(CloseSettingFunctionState(context: event.context));
+    });
   }
 }

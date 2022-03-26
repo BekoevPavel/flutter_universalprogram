@@ -63,7 +63,8 @@ class MainPage extends StatelessWidget {
                         posAnimate.value = 170.0;
                       }
 
-                      print('pos:${posAnimate.value}');
+                      //
+                      //print('pos:${posAnimate.value}');
                       LineContainerSourse().calculeTimeOnLine();
                     },
                     child: Container(

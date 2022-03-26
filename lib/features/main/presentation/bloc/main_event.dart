@@ -16,6 +16,11 @@ class OpenSettingElementEvent extends MainEvent {
   OpenSettingElementEvent({required this.context, required this.elementEntity});
 }
 
+class OpenSettingFunctionEvent extends MainEvent {
+  BuildContext context;
+  OpenSettingFunctionEvent({required this.context});
+}
+
 class AddElementEvent extends MainEvent {
   BuildContext context;
   AddElementEvent({required this.context});
@@ -30,6 +35,11 @@ class CloseSettingElementEvent extends MainEvent {
       elementEntity = elemEntity;
     }
   }
+}
+
+class CloseSettingFunctionEvent extends MainEvent {
+  BuildContext context;
+  CloseSettingFunctionEvent({required this.context});
 }
 
 class SetScaleEvent extends MainEvent {

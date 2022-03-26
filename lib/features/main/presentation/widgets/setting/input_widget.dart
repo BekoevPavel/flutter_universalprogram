@@ -29,7 +29,8 @@ class InputElementWidget extends StatelessWidget {
               child: TextFormField(
                 onEditingComplete: () {
                   elementEntity.inputVariable = _textControllerVariable.text;
-
+                  elementEntity.reservedVariable.name =
+                      _textControllerVariable.text;
                   myFocusNodeVariable.unfocus();
                 },
                 focusNode: myFocusNodeVariable,
@@ -52,6 +53,8 @@ class InputElementWidget extends StatelessWidget {
               child: TextFormField(
                 onEditingComplete: () {
                   elementEntity.inputFunction = _textControllerFunction.text;
+                  elementEntity.reservedVariable.function =
+                      _textControllerFunction.text;
 
                   myFocusNodeFunction.unfocus();
                 },
@@ -62,7 +65,7 @@ class InputElementWidget extends StatelessWidget {
                   hintText: 'Введите функцию от pins',
                 ),
               ),
-            )
+            ),
           ],
         )
       ],

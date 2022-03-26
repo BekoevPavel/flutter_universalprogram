@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
+import 'package:get/get.dart';
 
 class InputCutWidget extends StatelessWidget {
   Cut cut;
@@ -32,7 +33,8 @@ class InputCutWidget extends StatelessWidget {
               Text(' = f(t) = ${elementEntity.inputFunction}'),
             ],
           ),
-          const Text('real time value = '),
+          Obx((() => Text(
+              'real time value = ${elementEntity.realValue.value.toStringAsFixed(1)}')))
         ],
       ),
     );

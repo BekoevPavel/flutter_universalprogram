@@ -45,6 +45,11 @@ class Cut {
   String? function;
   RxDouble _realValue = 0.0.obs;
 
+  double get start {
+    var res = ((pointsMap[PositionCut.left]!) * 5 / 67.1);
+    return res;
+  }
+
   RxDouble get realVelue {
     ContextModel cm = ContextModel();
     var variablesLst = AllData.getInstance().reservedVariables;
@@ -53,9 +58,12 @@ class Cut {
         Variable('t'), Number(AllData.getInstance().currentTime.value));
 
     for (var i in variablesLst) {
-      Variable varibleTmp = Variable(i.name);
-      cm.bindVariable(varibleTmp, Number(double.parse(i.function)));
-      MathFunction mathFunction;
+      if (function?.contains(i.name!) ?? false) {
+        Variable varibleTmp = Variable(i.name!);
+        var value = i.value1;
+        cm.bindVariable(varibleTmp, Number(value));
+        // print('name: ${i.name} value: ${value}');
+      }
     }
 
     Parser p = Parser();
@@ -63,7 +71,6 @@ class Cut {
     Expression exp = p.parse(function ?? '0');
 
     double y = exp.evaluate(EvaluationType.REAL, cm);
-
     _realValue = RxDouble(y);
     return _realValue;
   }
@@ -78,9 +85,5 @@ class Cut {
 
   set pointsMap(Map<PositionCut, double> currentMap) {
     pointsMap_ = currentMap;
-  }
-
-  double getCurrentF() {
-    return 0;
   }
 }

@@ -18,6 +18,13 @@ class OutputCutWidget extends StatelessWidget {
     return Container(
       child: Row(
         children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Start: ${cut.start.toStringAsFixed(1)}'),
+              Text('End: ')
+            ],
+          ),
           const Text(
             'y = f(t) =',
             style: TextStyle(fontSize: 20),

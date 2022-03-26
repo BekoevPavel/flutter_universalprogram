@@ -11,6 +11,16 @@ class AddRemoveButttons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         ElevatedButton(
+            onPressed: () {
+              MainBloc mainBloc = BlocProvider.of<MainBloc>(context);
+
+              mainBloc.add(OpenSettingFunctionEvent(context: context));
+            },
+            child: const Text('function set')),
+        const SizedBox(
+          width: 30,
+        ),
+        ElevatedButton(
           onPressed: () {
             MainBloc mainBloc = BlocProvider.of<MainBloc>(context);
             //userBloc.add(OpenSettingElementEvent(context, true));

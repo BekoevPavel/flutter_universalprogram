@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
+import 'package:flutter_universalprogram/features/main/domain/sourse/convet_simbol_num.dart';
 import 'package:flutter_universalprogram/features/main/presentation/pages/main_page.dart';
 
 import 'package:flutter_universalprogram/features/main/presentation/pages/setting_element_page.dart';
+import 'package:flutter_universalprogram/features/main/presentation/pages/setting_function_page.dart';
 
 import 'features/main/presentation/bloc/main_bloc.dart';
 import 'dart:io' show WebSocket;
@@ -49,6 +51,7 @@ Future<void> webSoketsWork() async {
 
 void main() async {
   //webSoketsWork();
+
   runApp(const HomePage());
 }
 
@@ -64,6 +67,7 @@ class HomePage extends StatelessWidget {
             switch (settings.name) {
               case '/':
                 return MaterialPageRoute(builder: (context) => MainPage());
+
               case '/setting_element':
                 ElementEntity elementEntity =
                     settings.arguments as ElementEntity;
@@ -88,6 +92,28 @@ class HomePage extends StatelessWidget {
                     return SettingElementPage(
                       elementEntity: elementEntity,
                     );
+                  },
+                );
+              case '/setting_function':
+                return PageRouteBuilder(
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    return ScaleTransition(
+                      alignment: Alignment.bottomCenter,
+                      scale: Tween<double>(begin: 0.1, end: 1).animate(
+                        CurvedAnimation(
+                          parent: animation,
+                          curve: Curves.ease,
+                        ),
+                      ),
+                      child: child,
+                    );
+                  },
+                  transitionDuration: const Duration(milliseconds: 300),
+                  pageBuilder: (BuildContext context,
+                      Animation<double> animation,
+                      Animation<double> secondaryAnimation) {
+                    return const SettingFunctionPage();
                   },
                 );
             }

@@ -31,6 +31,14 @@ class OpenSettingElementState extends MainState {
   }
 }
 
+class OpenSettingFunctionState extends MainState {
+  BuildContext context;
+
+  OpenSettingFunctionState({required this.context}) {
+    Navigator.pushNamed(context, '/setting_function');
+  }
+}
+
 class AddElementState extends MainState {
   BuildContext context;
   AddElementState({required this.context}) {
@@ -45,6 +53,20 @@ class AddElementState extends MainState {
   }
 }
 
+class CloseSettingFunctionState extends MainState {
+  BuildContext context;
+  CloseSettingFunctionState({required this.context}) {
+    AllData.getInstance().userFunctionsReserved.clear();
+    for (var i in AllData.getInstance().usersFunctionsEntities) {
+      i.addToListVariables();
+      //if (i.name != null && i.function != null) {
+      //AllData.getInstance().reservedVariables.add(i.reservedVariable);
+      //}
+    }
+    Navigator.of(context).pop();
+  }
+}
+
 class CloseSettingElementState extends MainState {
   int countEntities = 1;
   ElementEntity? elementEntity;
@@ -53,10 +75,19 @@ class CloseSettingElementState extends MainState {
 
   CloseSettingElementState(this.context, this.elementEntity) {
     print('var: ${elementEntity}');
+
+    var mass = AllData.getInstance()
+        .reservedVariables
+        .where((element) => element == elementEntity!.reservedVariable);
+
     if (elementEntity?.inputVariable != null) {
-      AllData.getInstance().reservedVariables.add(ReservedVariable(
-          name: elementEntity!.inputVariable!,
-          function: elementEntity!.inputFunction!));
+      if (mass.isEmpty) {
+        AllData.getInstance()
+            .reservedVariables
+            .add(elementEntity!.reservedVariable);
+      } else {
+        //mass.first.function = elementEntity!.inputFunction!;
+      }
     }
 
     Navigator.of(context).pop();
