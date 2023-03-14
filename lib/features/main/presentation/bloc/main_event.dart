@@ -75,3 +75,5 @@ class AddPinEvent extends MainEvent {
       required this.number,
       required this.elementEntity});
 }
+
+class UpdatTestEvet extends MainEvent {}

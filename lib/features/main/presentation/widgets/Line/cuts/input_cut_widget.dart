@@ -33,8 +33,10 @@ class InputCutWidget extends StatelessWidget {
               Text(' = f(t) = ${elementEntity.inputFunction}'),
             ],
           ),
-          Obx((() => Text(
-              'real time value = ${elementEntity.realValue.value.toStringAsFixed(1)}')))
+          // Obx(
+          //   (() => Text(
+          //       'real time value = ${elementEntity.realValue.value.toStringAsFixed(1)}')),
+          // )
         ],
       ),
     );

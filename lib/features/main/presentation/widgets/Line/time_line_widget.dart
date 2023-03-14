@@ -11,10 +11,10 @@ import 'package:get/get.dart';
 class TimeLineWidget extends StatelessWidget {
   ElementEntity elementEntity;
   double clickPosition = 0;
+
   TimeLineWidget({Key? key, required this.elementEntity}) : super(key: key);
   GlobalKey globalKey = GlobalKey();
   @override
-  // TODO: implement key
   Key? get key => globalKey;
 
   @override
@@ -28,7 +28,7 @@ class TimeLineWidget extends StatelessWidget {
 
         var delta =
             LineContainerSourse().getScalePoint(constraints.maxWidth).delta;
-        print('delta: $delta');
+
         var countLines = LineContainerSourse()
             .getScalePoint(constraints.maxWidth)
             .countLines;
@@ -81,7 +81,6 @@ Widget stackBuilder(double width, ElementEntity elementEntity) {
   var start = LineContainerSourse().getScalePoint(width).start;
   var delta = LineContainerSourse().getScalePoint(width).delta;
   var countLines = LineContainerSourse().getScalePoint(width).countLines;
-
   widgets = dialWidget(
       delta: delta,
       start: start,

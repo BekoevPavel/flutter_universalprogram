@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/user_function_entity.dart';
+import 'package:flutter_universalprogram/features/main/domain/sourse/convet_simbol_num.dart';
 
 class FunctionElementWidget extends StatelessWidget {
   late FocusNode myFocusNodeName = FocusNode();
   late FocusNode myFocusNodeFunction = FocusNode();
   late TextEditingController _nameController =
-      TextEditingController(text: userFunctionEntity.name);
+      TextEditingController(text: correctStrToNum(userFunctionEntity.name));
   late TextEditingController _functionController =
-      TextEditingController(text: userFunctionEntity.function);
+      TextEditingController(text: correctStrToNum(userFunctionEntity.function));
   UserFunctionEntity userFunctionEntity;
   FunctionElementWidget({Key? key, required this.userFunctionEntity})
       : super(key: key);

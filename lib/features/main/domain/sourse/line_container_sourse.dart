@@ -3,9 +3,11 @@ import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/line_entity.dart';
 import 'dart:math' as math;
 
+import 'package:get/get.dart';
+
 class ScaleParams {
   int countLines;
-  double delta;
+  RxDouble delta;
   double start;
   ScaleParams(
       {required this.countLines, required this.delta, required this.start});
@@ -17,8 +19,9 @@ class LineContainerSourse {
   ScaleParams getScalePoint(double width) {
     var scale = AllData.getInstance().scaleTimeLine;
     var start = AllData.getInstance().scrollK;
-    var scaleParams =
-        ScaleParams(countLines: 100, delta: width / 20 * scale, start: start);
+    var scaleParams = ScaleParams(
+        countLines: 100, delta: RxDouble(width / 20 * scale), start: start);
+
 //120 ~/ scale countLines
 //(width / 15) delta
     return scaleParams;
@@ -96,7 +99,7 @@ class LineContainerSourse {
     var localPosAminate = posAnimate - 172.0;
     var scale = AllData.getInstance().scaleTimeLine;
     var scroll = AllData.getInstance().scrollK;
-    print(scroll);
+
     /*
 1 = 1767.1
 x = localPos

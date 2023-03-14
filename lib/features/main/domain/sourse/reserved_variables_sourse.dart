@@ -1,3 +1,5 @@
+import 'package:flutter_universalprogram/features/main/domain/sourse/convet_simbol_num.dart';
+import 'package:get/get.dart';
 import 'package:math_expressions/math_expressions.dart';
 
 import '../all_data.dart';
@@ -5,31 +7,25 @@ import '../all_data.dart';
 class ReservedVariable {
   String? name;
   String? function;
-  late double _value;
 
-  set value1(double t) {
-    _value = 0.0;
-  }
-
-  double get value1 {
+  RxDouble get value1 {
     if (double.tryParse(function!) == null) {
+      function = correctString(function!);
+
       ContextModel cm = ContextModel();
       var variablesLst = [...AllData.getInstance().reservedVariables];
 
       variablesLst.remove(this);
-      // print('var: $name');
 
-      for (var i in variablesLst) {
-        //print('name: ${i.name}');
-      }
       cm.bindVariable(
           Variable('t'), Number(AllData.getInstance().currentTime.value));
-
+      function = correctString(function!);
       for (var i in variablesLst) {
+        i.name = correctString(i.name!);
+
         if (function!.contains(i.name!)) {
-          // print('iz name: ${i.name}');
           Variable varibleTmp = Variable(i.name!);
-          cm.bindVariable(varibleTmp, Number(i.value1));
+          cm.bindVariable(varibleTmp, Number(i.value1.value));
         }
       }
 
@@ -40,7 +36,7 @@ class ReservedVariable {
       return exp.evaluate(EvaluationType.REAL, cm);
     }
 
-    return double.parse(function!);
+    return RxDouble(double.parse(function!));
   }
 
   ReservedVariable({this.name, this.function});

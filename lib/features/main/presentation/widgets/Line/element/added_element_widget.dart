@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_universalprogram/features/main/domain/entities/element_entity.dart';
 import 'package:flutter_universalprogram/features/main/presentation/bloc/main_bloc.dart';
+import 'package:get/get.dart';
 
 class AddedElementWidget extends StatelessWidget {
   final ElementEntity elementEntity;
@@ -24,8 +25,18 @@ class AddedElementWidget extends StatelessWidget {
       height: 100,
       child: Column(
         children: [
-          Text(
-            elementEntity.typeEnter == TypeEnter.input ? 'Input' : 'Output',
+          Row(
+            children: [
+              Text(
+                elementEntity.typeEnter == TypeEnter.input ? 'Input' : 'Output',
+              ),
+              Obx(() {
+                return Text(
+                    '${elementEntity.lineEntity.cuts.first.realVelue(0).toStringAsFixed(1)}');
+              })
+
+              //elementEntity.lineEntity.cuts.first.realVelue.value.toStringAsFixed(1)
+            ],
           ),
           Text(elementEntity != null
               ? '${elementEntity.nameElement} id: ${elementEntity.id}'

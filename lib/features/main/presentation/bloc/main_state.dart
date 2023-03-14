@@ -74,8 +74,6 @@ class CloseSettingElementState extends MainState {
   bool state = false;
 
   CloseSettingElementState(this.context, this.elementEntity) {
-    print('var: ${elementEntity}');
-
     var mass = AllData.getInstance()
         .reservedVariables
         .where((element) => element == elementEntity!.reservedVariable);
@@ -122,6 +120,7 @@ class AddCutOnBoardState extends MainState {
     var x = (dx + params.start) / scale;
 
     elementEntity.lineEntity.addCut(x);
+    //AllData.getInstance().scrollK = RxDouble(1);
   }
 }
 
@@ -140,6 +139,11 @@ class AddPinState extends MainState {
       required this.number,
       required this.elementEntity}) {
     elementEntity.pins.add(Pin(typePin: typePin, number: number));
-    print('pin added');
+  }
+}
+
+class UpdateTest extends MainState {
+  UpdateTest() {
+    print('ura');
   }
 }

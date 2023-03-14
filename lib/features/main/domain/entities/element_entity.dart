@@ -25,11 +25,11 @@ class ElementEntity {
 
     var find = variablesLst.where((element) => element.name == inputVariable);
     for (var i in variablesLst) {
-      print('name: ${i.name} val: ${i.value1}');
+      //print('name: ${i.name} val: ${i.value1}');
     }
     if (find.isNotEmpty) {
       //print('realTime: ${find.first.value1}');
-      _realValue = RxDouble(find.first.value1);
+      _realValue = RxDouble(find.first.value1.value);
     }
     //_realValue = RxDouble(varible.value1);
     // where((element) => element.name == 'myName').isNotEmpty

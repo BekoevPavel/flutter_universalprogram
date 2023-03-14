@@ -34,7 +34,6 @@ class _SearchWidgetState extends State<SearchWidget> {
   @override
   void initState() {
     // TODO: implement initState
-    print('update');
   }
 
   @override

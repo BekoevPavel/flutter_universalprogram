@@ -4,30 +4,32 @@ import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
 import 'package:flutter_universalprogram/features/main/presentation/bloc/main_bloc.dart';
 import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/element/added_element_widget.dart';
 import 'package:flutter_universalprogram/features/main/presentation/widgets/Line/time_line_widget.dart';
+import 'package:get/get.dart';
 
 class LineContainer extends StatelessWidget {
   final double scale = 1;
   const LineContainer({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context1) {
+  Widget build(BuildContext context) {
     return Center(
       child: Container(
-        color: Colors.grey[200],
-        margin: const EdgeInsets.all(12),
-        child: BlocBuilder<MainBloc, MainState>(
-          builder: (context, state) {
-            MainBloc userBloc = BlocProvider.of<MainBloc>(context);
-            userBloc.add(UpdateEvent());
-            return listLines(context, state);
-          },
-        ),
-      ),
+          color: Colors.grey[200],
+          margin: const EdgeInsets.all(12),
+          child: listLines(context)),
     );
   }
 }
 
-Widget listLines(BuildContext context, MainState state) {
+//  BlocBuilder<MainBloc, MainState>(
+//           builder: (context, state) {
+//             MainBloc userBloc = BlocProvider.of<MainBloc>(context);
+//             userBloc.add(UpdateEvent());
+//             return listLines(context);
+//           },
+//         ),
+
+Widget listLines(BuildContext context) {
   var allData = AllData.getInstance();
 
   return ListView(

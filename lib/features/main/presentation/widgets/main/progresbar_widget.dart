@@ -14,6 +14,7 @@ class ProgressBarWidget extends StatefulWidget {
 
 class _ProgressBarWidgetState extends State<ProgressBarWidget> {
   MainBloc mainBloc;
+  double oldVal = 0;
 
   double width = 1;
 
@@ -57,9 +58,11 @@ class _ProgressBarWidgetState extends State<ProgressBarWidget> {
                 () {
                   delta_x = onDrag.localPosition.dx;
 
-                  AllData.getInstance().scrollK = delta_x;
-
-                  mainBloc.add(ScrollEvent());
+                  if (deference(oldVal, delta_x) > 15) {
+                    AllData.getInstance().scrollK = delta_x;
+                    oldVal = delta_x;
+                    mainBloc.add(ScrollEvent());
+                  }
                 },
               );
             }
@@ -90,4 +93,8 @@ double posLeft(double delta_x, double width) {
   }
 
   return 0;
+}
+
+double deference(double oldVal, double newVal) {
+  return (newVal - oldVal).abs();
 }

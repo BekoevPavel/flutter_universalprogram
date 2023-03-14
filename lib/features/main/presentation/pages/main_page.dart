@@ -15,9 +15,17 @@ class MainPage extends StatelessWidget {
   double startValue = 300.0;
 
   var posAnimate = AllData.getInstance().posAnimate;
-
+//  BlocBuilder<MainBloc, MainState>(
+//           builder: (context, state) {
+//             MainBloc userBloc = BlocProvider.of<MainBloc>(context);
+//             userBloc.add(UpdateEvent());
+//             return listLines(context);
+//           },
+//         ),
   @override
   Widget build(BuildContext context) {
+
+    
     return Scaffold(
       body: Stack(
         children: [
@@ -30,8 +38,21 @@ class MainPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Expanded(
-                child: LineContainer(),
+              Expanded(
+                child: BlocBuilder<MainBloc, MainState>(
+                  builder: ((context, state) {
+                    MainBloc userBloc = BlocProvider.of<MainBloc>(context);
+                    if (state is AddCutOnBoardState) {
+                      userBloc.add(UpdateEvent());
+                      return LineContainer();
+                    }
+
+                    print('pdate');
+                    userBloc.add(UpdateEvent());
+                    return LineContainer();
+                  }),
+                  //LineContainer(),
+                ),
               ),
               _settingLinesWidget(context),
             ],
@@ -108,7 +129,7 @@ Widget _settingLinesWidget(BuildContext context) {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Obx(() => Text(
-                't = ${AllData.getInstance().currentTime.toStringAsFixed(3)}',
+                't = ${AllData.getInstance().currentTime.toStringAsFixed(3).substring(0, 5)} ok ${AllData.getInstance().tcpVal.value}',
                 style: const TextStyle(
                   fontSize: 20,
                 ),
@@ -146,3 +167,16 @@ Widget _settingLinesWidget(BuildContext context) {
     ],
   );
 }
+//обновить виджет по новому!
+// Container(
+//                 width: 1000,
+//                 height: 500,
+//                 child: SingleChildScrollView(
+//                   scrollDirection: Axis.horizontal,
+//                   child: Container(
+//                     width: 10000,
+//                     height: 150,
+//                     child: LineContainer(),
+//                   ),
+//                 ),
+//               ),

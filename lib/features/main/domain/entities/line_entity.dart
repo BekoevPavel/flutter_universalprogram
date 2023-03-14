@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_universalprogram/features/main/domain/all_data.dart';
+import 'package:flutter_universalprogram/features/main/domain/sourse/convet_simbol_num.dart';
 import 'package:flutter_universalprogram/features/main/domain/sourse/line_container_sourse.dart';
 import 'package:get/get.dart';
 import 'dart:math' as math;
@@ -9,17 +11,19 @@ import 'package:math_expressions/math_expressions.dart';
 enum PositionCut { left, width, right }
 
 class LineEntity {
-  List<Cut> _cuts = [
+  RxList<Cut> cuts = RxList([
     Cut(
-        id: 0,
-        pointsMap_: {
-          PositionCut.left: 0.0,
-          PositionCut.width: 12.0,
-          PositionCut.right: 10
-        },
-        color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
-            .withOpacity(0.3)),
-  ];
+      id: 0,
+      pointsMap_: {
+        PositionCut.left: 0.0,
+        PositionCut.width: 12.0,
+        PositionCut.right: 10
+      },
+      color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt())
+          .withOpacity(0.3),
+    )
+  ]);
+
   late double scale = 1;
 
   void updateCuts(double width) {
@@ -33,24 +37,25 @@ class LineEntity {
   void addCut(double pos) {
     double width = 200;
     LineContainerSourse lineContainer = LineContainerSourse();
-    _cuts = lineContainer.getCalculateCuts(cuts, width, pos);
+    cuts.value = lineContainer.getCalculateCuts(cuts.value, width, pos);
+    print('add cut + ${cuts.length}');
   }
 
-  List<Cut> get cuts => _cuts;
+  //List<Cut> get cuts => _cuts;
 }
 
 class Cut {
   int id;
   Color? color;
   String? function;
-  RxDouble _realValue = 0.0.obs;
+  double _realValue = 0.0;
 
   double get start {
     var res = ((pointsMap[PositionCut.left]!) * 5 / 67.1);
     return res;
   }
 
-  RxDouble get realVelue {
+  double realVelue(int a) {
     ContextModel cm = ContextModel();
     var variablesLst = AllData.getInstance().reservedVariables;
 
@@ -58,11 +63,15 @@ class Cut {
         Variable('t'), Number(AllData.getInstance().currentTime.value));
 
     for (var i in variablesLst) {
+      //print('var: ${i.name}');
+      i.name = correctString(i.name!);
+      i.function = correctString(i.function!);
       if (function?.contains(i.name!) ?? false) {
+        i.name = correctString(i.name!);
+
         Variable varibleTmp = Variable(i.name!);
         var value = i.value1;
-        cm.bindVariable(varibleTmp, Number(value));
-        // print('name: ${i.name} value: ${value}');
+        cm.bindVariable(varibleTmp, Number(value.value));
       }
     }
 
@@ -71,7 +80,8 @@ class Cut {
     Expression exp = p.parse(function ?? '0');
 
     double y = exp.evaluate(EvaluationType.REAL, cm);
-    _realValue = RxDouble(y);
+    _realValue = y;
+
     return _realValue;
   }
 

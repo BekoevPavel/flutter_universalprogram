@@ -77,5 +77,9 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     on<CloseSettingFunctionEvent>((event, emit) {
       emit(CloseSettingFunctionState(context: event.context));
     });
+
+    on<UpdatTestEvet>(((event, emit) {
+      emit(UpdateTest());
+    }));
   }
 }

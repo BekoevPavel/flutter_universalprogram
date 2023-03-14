@@ -57,10 +57,10 @@ class MyPainter extends CustomPainter {
     ScaleParams scaleParams = lineContainerSourse.getScalePoint(width);
 
     for (int i = 0; i < scaleParams.countLines; i++) {
-      double x1 = i * scaleParams.delta;
+      double x1 = i * scaleParams.delta.value;
       double y1 = 0;
 
-      double x2 = i * scaleParams.delta;
+      double x2 = i * scaleParams.delta.value;
       double y2 = 50;
 
       double minus_x = scaleParams.start;
